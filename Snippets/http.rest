@@ -15,5 +15,11 @@ Content-Type: application/json
 }
 
 ###
+
 GET http://127.0.0.1:8000/snippets/1
+Content-Type: application/json
+
+###
+
+GET http://127.0.0.1:8000/snippet/1/highlight
 Content-Type: application/json
