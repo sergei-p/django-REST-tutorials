@@ -4,7 +4,7 @@ from pygments import highlight
 from rest_framework import serializers
 from snippets.models import Snippet, LANGUAGE_CHOICES, STYLE_CHOICES
 
-class SnippetSerializer(serializers.ModelSerializer):
+class SnippetSerializer(serializers.HyperlinkedModelSerializer):
 	owner = serializers.ReadOnlyField(source='owner.username') # Also allowed to use CharField(read_only=True)
 	highlight = serializers.HyperlinkedIdentityField(view_name='snippet-highlight', format='html')
 
@@ -14,11 +14,11 @@ class SnippetSerializer(serializers.ModelSerializer):
 		
 
 class UserSerializer(serializers.ModelSerializer):
-	snippets = serializers.HyperlinkedIdentityField(many=True, view_name='snippet-detail', read_only=True)
+	snippets = serializers.HyperlinkedRelatedField(many=True, view_name='snippet-detail', read_only=True)
 
 	class Meta:
 		model = User
-		fields = ['id', 'username', 'snippets']
+		fields = ['url', 'id', 'username', 'snippets']
 
 # class SnippetSerializer(serializers.Serializer):
 #   id = serializers.IntegerField(read_only=True)
